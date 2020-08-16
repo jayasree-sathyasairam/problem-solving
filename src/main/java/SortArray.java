@@ -5,19 +5,25 @@ public class SortArray {
 
     public static void main(String[] args) {
         for (int i = 0; i < args.length; i++) {
-            ArrayList<Integer> numArr;
             SortArray obj = new SortArray();
-            try{
-                numArr = obj.constructInput(args[i]);
-            } catch(NumberFormatException e){
+            try {
+                System.out.println(obj.findLargestConcatenatedInt(args[i]).toString());
+            } catch (NumberFormatException e){
                 System.out.println("Input type is not supported.");
-                continue;
             }
-            obj.quickSort(numArr, 0, numArr.size()-1);
-            System.out.println(numArr.toString());
         }
     }
-    public ArrayList<Integer> constructInput(String input){
+    public ArrayList<Integer> findLargestConcatenatedInt(String input){
+        ArrayList<Integer> numArr;
+        try {
+            numArr = constructInput(input);
+        } catch(NumberFormatException e){
+            throw new NumberFormatException();
+        }
+        quickSort(numArr, 0, numArr.size()-1);
+        return numArr;
+    }
+    public ArrayList<Integer> constructInput(String input) {
         String[] array = input.split(",");
         ArrayList<Integer> numArray = new ArrayList<Integer>();
         try {
@@ -28,12 +34,11 @@ public class SortArray {
                     throw new NumberFormatException();
             }
             return numArray;
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new NumberFormatException();
         }
     }
-    public void quickSort(ArrayList<Integer> arrayList, int low, int high)
-    {
+    public void quickSort(ArrayList<Integer> arrayList, int low, int high) {
         if (low < high)
         {
             int pivot = partition(arrayList, low, high);
@@ -41,17 +46,14 @@ public class SortArray {
             quickSort(arrayList, pivot+1, high);
         }
     }
-    public int partition(ArrayList<Integer>  arrayList, int low, int high)
-    {
+    public int partition(ArrayList<Integer>  arrayList, int low, int high) {
         int pivot = arrayList.get(high);
         int i = (low-1);
-        for (int j=low; j<high; j++)
-        {
+        for (int j=low; j<high; j++) {
             long AB = Long.parseLong((arrayList.get(j).toString()) + pivot);
             long BA = Long.parseLong(pivot + arrayList.get(j).toString());
 
-            if (BA < AB)
-            {
+            if (BA < AB) {
                 i++;
                 int temp = arrayList.get(i);
                 arrayList.set(i, arrayList.get(j));
