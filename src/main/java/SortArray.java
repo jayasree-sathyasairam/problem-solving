@@ -3,6 +3,11 @@ import java.util.ArrayList;
 
 public class SortArray {
 
+    /**
+     *
+     * Problem Statement: Given an integer array, sort the integer array such that the concatenated integer of the result array is max.
+     * e.g. [4, 4, 9, 7, 1] will be sorted to [9,7,4,4,1] where the result integer is 97441
+     */
     public static void main(String[] args) {
         for (int i = 0; i < args.length; i++) {
             SortArray obj = new SortArray();
