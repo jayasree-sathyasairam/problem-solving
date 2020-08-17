@@ -19,7 +19,8 @@ public class SortArrayTest {
     @Test
     public void shouldReturnLargestPossibleNumberForGivenBigNumbers() {
         SortArray sortArray = new SortArray();
-        assertEquals(sortArray.findLargestConcatenatedInt("90,214748364,214748369").toString(), "[90, 214748369, 214748364]");
+        //Integers biggest number is 2147483647
+        assertEquals(sortArray.findLargestConcatenatedInt("90,2147483647,2147483647").toString(), "[90, 2147483647, 2147483647]");
     }
 
     @Test

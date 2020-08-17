@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 
@@ -55,10 +56,10 @@ public class SortArray {
         int pivot = arrayList.get(high);
         int i = (low-1);
         for (int j=low; j<high; j++) {
-            long AB = Long.parseLong((arrayList.get(j).toString()) + pivot);
-            long BA = Long.parseLong(pivot + arrayList.get(j).toString());
+            BigInteger AB = new BigInteger(arrayList.get(j).toString() + pivot);
+            BigInteger BA = new BigInteger(pivot + arrayList.get(j).toString());
 
-            if (BA < AB) {
+            if (BA.compareTo(AB) < 0) {
                 i++;
                 int temp = arrayList.get(i);
                 arrayList.set(i, arrayList.get(j));
