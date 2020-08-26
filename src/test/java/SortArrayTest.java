@@ -1,85 +1,107 @@
+import org.junit.Before;
 import org.junit.Test;
+
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class SortArrayTest {
+    SortArray sortArray;
 
-
-    @Test
-    public void shouldReturnLargestPossibleNumberForGivenSingleDigitNumbers() {
-        SortArray sortArray = new SortArray();
-        assertEquals(sortArray.findLargestConcatenatedInt("1,2,3,4,5").toString(), "[5, 4, 3, 2, 1]");
+    @Before
+    public void setup(){
+        sortArray = new SortArray();
     }
 
     @Test
-    public void shouldReturnLargestPossibleNumberForGivenVariableDigitNumbers() {
-        SortArray sortArray = new SortArray();
-        assertEquals(sortArray.findLargestConcatenatedInt("10,9,8,7,4,29,81").toString(), "[9, 8, 81, 7, 4, 29, 10]");
-    }
+    public void testInputConstruction(){
+        //testForSmallNumbers
+        assertEquals(sortArray.constructInput("1,2,3,4,5").toString(), "[1, 2, 3, 4, 5]");
 
-    @Test
-    public void shouldReturnLargestPossibleNumberForGivenBigNumbers() {
-        SortArray sortArray = new SortArray();
-        //Integers biggest number is 2147483647
-        assertEquals(sortArray.findLargestConcatenatedInt("90,2147483647,2147483647").toString(), "[90, 2147483647, 2147483647]");
-    }
+        //testForBigNumbers
+        assertEquals(sortArray.constructInput("2147483647,2147483647,2147483647").toString(), "[2147483647, 2147483647, 2147483647]");
 
-    @Test
-    public void shouldReturnNumberFormatExceptionForFloatNumbers() {
-        SortArray sortArray = new SortArray();
+        //testForEmptyString
+        try{
+            sortArray.constructInput("");
+        }catch(NumberFormatException e){
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
+
+        //testForLongNumbers
+        try{
+            sortArray.constructInput("1,2,3676384296572647582364");
+        }catch(NumberFormatException e){
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
+
+        //testForNegativeNumbers
         try {
-            sortArray.findLargestConcatenatedInt("1,2.7,3");
+            sortArray.constructInput("1,-2,3");
+        } catch (Exception e) {
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
+
+        //testForDecimalNumbers
+        try {
+            sortArray.constructInput("1,2.7,3");
+        } catch (Exception e) {
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
+
+        //testForAlphabets
+        try {
+            sortArray.constructInput("a,b,c");
+        } catch (Exception e) {
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
+
+        //testForSpecialCharacters
+        try {
+            sortArray.constructInput("$,#,@");
+        } catch (Exception e) {
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
+
+        //testForInputFormatWithSpaceBetweenNumbers
+        try {
+            sortArray.constructInput("1, 2, 3");
         } catch (Exception e) {
             assertEquals(e.getClass(), NumberFormatException.class);
         }
     }
 
     @Test
-    public void shouldReturnNumberFormatExceptionForEmptyArray() {
-        SortArray sortArray = new SortArray();
-        try {
-            sortArray.findLargestConcatenatedInt("");
-        } catch (Exception e) {
-            assertEquals(e.getClass(), NumberFormatException.class);
-        }
+    public void testQuickSort(){
+        ArrayList<Integer> numArr;
+
+        //testForSingleDigitNumbers
+        numArr = sortArray.constructInput("1,2,3,4,5");
+        sortArray.quickSort(numArr, 0, numArr.size()-1);
+        assertEquals(numArr.toString(), "[5, 4, 3, 2, 1]");
+
+        //testForVariableDigitNumbers
+        numArr = sortArray.constructInput("10,9,8,7,4,29,81");
+        sortArray.quickSort(numArr, 0, numArr.size()-1);
+        assertEquals(numArr.toString(), "[9, 8, 81, 7, 4, 29, 10]");
+
+        //testForSingletonArray
+        numArr = sortArray.constructInput("1");
+        sortArray.quickSort(numArr, 0, numArr.size()-1);
+        assertEquals(numArr.toString(), "[1]");
+
+        //testForBiggerNumbers
+        numArr = sortArray.constructInput("2147483643,2147483642,21474888");
+        sortArray.quickSort(numArr, 0, numArr.size()-1);
+        assertEquals(numArr.toString(), "[21474888, 2147483643, 2147483642]");
     }
 
     @Test
-    public void shouldReturnNumberFormatExceptionForNegativeNumbers() {
-        SortArray sortArray = new SortArray();
-        try {
-            sortArray.findLargestConcatenatedInt("1,-2,3");
-        } catch (Exception e) {
-            assertEquals(e.getClass(), NumberFormatException.class);
-        }
-    }
+    public void testPartition(){
 
-    @Test
-    public void shouldReturnNumberFormatExceptionForAlphabets() {
-        SortArray sortArray = new SortArray();
-        try {
-            sortArray.findLargestConcatenatedInt("a,b,c");
-        } catch (Exception e) {
-            assertEquals(e.getClass(), NumberFormatException.class);
-        }
-    }
-
-    @Test
-    public void shouldReturnNumberFormatExceptionForSpecialCharactersAsSpace() {
-        SortArray sortArray = new SortArray();
-        try {
-            sortArray.findLargestConcatenatedInt("1, 2, 3");
-        } catch (Exception e) {
-            assertEquals(e.getClass(), NumberFormatException.class);
-        }
-    }
-
-    @Test
-    public void shouldReturnNumberFormatExceptionForLongNumbers() {
-        SortArray sortArray = new SortArray();
-        try {
-            sortArray.findLargestConcatenatedInt("1,2,3676384296572647582364");
-        } catch (Exception e) {
-            assertEquals(e.getClass(), NumberFormatException.class);
-        }
+        //testForSingleDigitNumbers
+        sortArray.quickSort(sortArray.constructInput("1,2,3,4,5"), 0, 4);
+        assertEquals(0, 0);
     }
 }
