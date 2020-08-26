@@ -100,7 +100,7 @@ public class SortArrayTest {
     @Test
     public void testPartition(){
 
-        //testForSingleDigitNumbers
+        //testPivotNumber
         sortArray.quickSort(sortArray.constructInput("1,2,3,4,5"), 0, 4);
         assertEquals(0, 0);
     }
