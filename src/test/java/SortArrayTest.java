@@ -113,7 +113,20 @@ public class SortArrayTest {
 
     @Test
     public void shouldReturnPivotNumberForGivenArray(){
-        sortArray.quickSort(sortArray.constructInput("1,2,3,4,5"), 0, 4);
-        assertEquals(0, 0);
+        assertEquals(sortArray.partition(sortArray.constructInput("1,2,3,4,5"), 0, 4), 0);
+    }
+
+    @Test
+    public void shouldReturnLargestPossibleIntForGivenNumbers(){
+        assertEquals(sortArray.findLargestConcatenatedInt("19,81,0,7,9,59").toString(),"[9, 81, 7, 59, 19, 0]");
+    }
+
+    @Test
+    public void shouldReturnNumberFormatExceptionForGivenNonSupportedInput(){
+        try{
+            sortArray.findLargestConcatenatedInt("a,b,c");
+        }catch(NumberFormatException e){
+            assertEquals(e.getClass(), NumberFormatException.class);
+        }
     }
 }
